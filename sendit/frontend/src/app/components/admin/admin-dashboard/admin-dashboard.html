@@ -1,0 +1,133 @@
+<div class="admin-dashboard">
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a routerLink="/admin-dashboard" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/profile" routerLinkActive="active" class="nav-link">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+
+        <li class="nav-item" *ngIf="userRole === 'ADMIN'">
+          <a routerLink="/admin-create-delivery" routerLinkActive="active" class="nav-link admin-nav">
+            <i class="fas fa-plus"></i>
+            <span>Dispatch Parcel</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="userRole === 'ADMIN'">
+          <a routerLink="/admin-manage-parcels" routerLinkActive="active" class="nav-link admin-nav">
+            <i class="fas fa-box"></i>
+            <span>Manage Parcels</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="userRole === 'ADMIN'">
+          <a routerLink="/admin-manage-users" routerLinkActive="active" class="nav-link admin-nav">
+            <i class="fas fa-users"></i>
+            <span>Manage Users</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+      </div>
+  </aside>
+
+  <main class="main-content">
+    <div *ngIf="userRole === 'ADMIN'">
+      <div class="content-header">
+        <div class="header-left">
+          <h1 class="dashboard-title">Admin Dashboard</h1>
+        </div>
+        <div class="header-right">
+          <a routerLink="/login" class="logout-link top-right">
+            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+          </a>
+        </div>
+      </div>
+
+   
+        <div class="summary-cards">
+          <div class="summary-card">
+            <h3>Total parcels</h3>
+            <p class="card-value">1200</p>
+          </div>
+          <div class="summary-card">
+            <h3>Deliveries in Progress</h3>
+            <p class="card-value">30</p>
+          </div>
+          <div class="summary-card">
+            <h3>Revenue</h3>
+            <p class="card-value">KSH 57,544.00</p>
+          </div>
+        </div>
+
+        <div class="performance-insights">
+          <h2>Performance Insights</h2>
+          <div class="insights-grid">
+            <div class="insight-card">
+              <h3>Average Delivery Time</h3>
+              <p class="insight-value">5 days</p>
+              <p class="insight-subtitle">Last 30 Days</p>
+              <div class="pie-chart-container">
+                <div class="pie-chart" style="background: conic-gradient(#48bb78 0% 70%, #ecc94b 70% 90%, #f6ad55 90% 100%);"></div>
+                <div class="pie-legend">
+                    <div class="legend-item"><span class="legend-color delivered"></span> Delivered (50%)</div>
+                    <div class="legend-item"><span class="legend-color in-progress"></span> In Progress (40%)</div>
+                    <div class="legend-item"><span class="legend-color pending"></span> Pending (10%)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="insight-card">
+              <h3>Delivery Status Overview</h3>
+              <p class="insight-value">300</p>
+              <p class="insight-subtitle">Total Deliveries Last 30 Days</p>
+              <div class="status-bars">
+                <div class="status-bar">
+                  <span class="bar-label">Delivered</span>
+                  <div class="bar-container">
+                    <div class="bar delivered"></div>
+                  </div>
+                </div>
+                <div class="status-bar">
+                  <span class="bar-label">In Progress</span>
+                  <div class="bar-container">
+                    <div class="bar in-progress"></div>
+                  </div>
+                </div>
+                <div class="status-bar">
+                  <span class="bar-label">Pending</span>
+                  <div class="bar-container">
+                    <div class="bar pending"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    <div *ngIf="userRole !== 'ADMIN'" class="access-denied">
+      <div class="access-denied-content">
+        <i class="fas fa-lock access-denied-icon"></i>
+        <h2>Access Denied</h2>
+        <p>You don't have permission to access the Admin Dashboard.</p>
+        <p>Please contact your administrator if you believe this is an error.</p>
+        <button routerLink="/user-dashboard" class="btn-primary">
+          <i class="fas fa-home"></i>
+          Go to User Dashboard
+        </button>
+      </div>
+    </div>
+  </main>
+</div>

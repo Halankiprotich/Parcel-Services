@@ -1,0 +1,149 @@
+<div class="user-dashboard">
+  <aside class="sidebar">
+    <nav class="sidebar-nav">
+      <a routerLink="/user-dashboard" class="nav-item active" routerLinkActive="active">
+        <i class="fas fa-home"></i>
+        <span>Overview</span>
+      </a>
+      <a routerLink="/user-parcels" class="nav-item">
+        <i class="fas fa-box"></i>
+        <span>Shipment Details</span>
+      </a>
+      <a routerLink="/profile" class="nav-item">
+        <i class="fas fa-user"></i>
+        <span>User Profile</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="header-section">
+      <div class="welcome-message">
+        <h1>Greetings, <span class="user-name">{{ userName }}!</span></h1>
+        <p class="info-text">
+          You have {{ parcelsInTransit }} active shipments and {{ scheduledForTomorrow }} deliveries scheduled for the next day.
+          Track your consignments below.
+        </p>
+      </div>
+    </div>
+
+    <div class="dashboard-section">
+      <h2 class="section-title">Latest System Activities</h2>
+      <div class="activity-list">
+        <div class="activity-item" *ngFor="let activity of recentActivities">
+          <div class="activity-icon">
+            <i [class]="getActivityIcon(activity)"></i>
+          </div>
+          <div class="activity-content">
+            <div class="activity-header">
+              <span class="parcel-id">{{ activity.parcelId }}</span>
+              <span class="activity-status" [ngClass]="getStatusClass(activity.status)">
+                {{ activity.status }}
+              </span>
+            </div>
+            <p class="activity-text">{{ getActivityText(activity) }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-section">
+      <div class="summary-cards">
+        <div class="summary-card" *ngFor="let card of summaryCards">
+          <div class="card-icon">
+            <i [class]="card.icon"></i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">{{ card.title }}</h3>
+            <p class="card-value">{{ card.value }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-section">
+      <div class="parcels-header">
+        <h2 class="section-title">Recent Consignments</h2>
+        <div class="tabs">
+          <button
+            class="tab-button"
+            [class.active]="activeTab === 'sent'"
+            (click)="switchTab('sent')"
+          >
+            Dispatched
+          </button>
+          <button
+            class="tab-button"
+            [class.active]="activeTab === 'received'"
+            (click)="switchTab('received')"
+          >
+            Received
+          </button>
+        </div>
+      </div>
+
+      <div class="parcels-table-container">
+        <table class="parcels-table">
+          <thead>
+            <tr>
+              <th>Consignment ID</th>
+              <th>Weight</th>
+              <th>Status</th>
+              <th>Collection Address</th>
+              <th>Delivery Destination</th>
+              <th>Anticipated Delivery</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let parcel of getRecentParcels()">
+              <td class="parcel-id">{{ parcel.id }}</td>
+              <td class="parcel-weight">{{ parcel.weight }}kg</td>
+              <td>
+                <span class="status-badge" [ngClass]="getStatusClass(parcel.status)">
+                  {{ parcel.status }}
+                </span>
+              </td>
+              <td class="address">{{ parcel.pickupAddress }}</td>
+              <td class="address">{{ parcel.deliveryAddress }}</td>
+              <td class="delivery-date">{{ parcel.expectedDelivery }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="dashboard-section">
+      <div class="stats-container">
+        <div class="stats-header">
+          <h2 class="section-title">Shipment Volume Analysis</h2>
+        </div>
+        <div class="stats-content">
+          <div class="stats-summary">
+            <div class="stats-number">{{ totalParcels }}</div>
+            <div class="stats-growth">
+              Last 6 Months <span class="growth-indicator">+{{ growthPercentage }}%</span>
+            </div>
+          </div>
+          <div class="stats-chart">
+            <div class="pie-chart-container">
+              <div class="pie-chart">
+                <div class="slice" style="--angle: 0deg; --color: #1abc9c; --size: 30%;"></div>
+                <div class="slice" style="--angle: 30%; --color: #3498db; --size: 25%;"></div>
+                <div class="slice" style="--angle: 55%; --color: #f39c12; --size: 20%;"></div>
+                <div class="slice" style="--angle: 75%; --color: #e74c3c; --size: 15%;"></div>
+                <div class="slice" style="--angle: 90%; --color: #95a5a6; --size: 10%;"></div>
+              </div>
+              <div class="pie-chart-legend">
+                <div class="legend-item"><span class="legend-color-box" style="background-color: #1abc9c;"></span> Delivered (30%)</div>
+                <div class="legend-item"><span class="legend-color-box" style="background-color: #3498db;"></span> In Transit (25%)</div>
+                <div class="legend-item"><span class="legend-color-box" style="background-color: #f39c12;"></span> Pending (20%)</div>
+                <div class="legend-item"><span class="legend-color-box" style="background-color: #e74c3c;"></span> Held (15%)</div>
+                <div class="legend-item"><span class="legend-color-box" style="background-color: #95a5a6;"></span> Other (10%)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

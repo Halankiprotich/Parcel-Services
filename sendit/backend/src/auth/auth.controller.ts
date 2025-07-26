@@ -8,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto, LoginDto, RefreshDto } from './dto';
-import { createJoiValidationPipe } from '../common/pipes/joi-validation.pipe';
 import { registerSchema, loginSchema } from './dto';
 
 @Controller('auth')
@@ -18,15 +17,23 @@ export class AuthController {
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   @UsePipes(createJoiValidationPipe(registerSchema))
-  register(@Body() registerDto: RegisterDto) {
-    return { message: 'User registration endpoint', data: registerDto };
+  async register(@Body() registerDto: RegisterDto) {
+    const newUser = await this.authService.register(registerDto);
+    return {
+      message: 'User registered successfully',
+      data: newUser,
+    };
   }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @UsePipes(createJoiValidationPipe(loginSchema))
-  login(@Body() loginDto: LoginDto) {
-    return { message: 'User login endpoint', data: loginDto };
+  async login(@Body() loginDto: LoginDto) {
+    const tokens = await this.authService.login(loginDto);
+    return {
+      message: 'Login successful',
+      data: tokens,
+    };
   }
 
   @Post('refresh')

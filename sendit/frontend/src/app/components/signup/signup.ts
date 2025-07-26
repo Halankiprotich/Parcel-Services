@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ToastService } from '../shared/toast/toast.service';
 
 @Component({
@@ -15,8 +15,10 @@ export class Signup {
   showPassword = false;
 
   signupData = {
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
+    phone: '',
     password: ''
   };
 
@@ -31,24 +33,32 @@ export class Signup {
   }
 
   onSubmit() {
-    // Validation
-    if (!this.signupData.name || !this.signupData.email || !this.signupData.password) {
+    const { firstName, lastName, email, phone, password } = this.signupData;
+
+    // Basic validation
+    if (!firstName || !lastName || !email || !phone || !password) {
       this.toastService.showError('Please fill in all required fields');
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(this.signupData.email)) {
+    if (!emailRegex.test(email)) {
       this.toastService.showError('Please enter a valid email address');
       return;
     }
 
-    if (this.signupData.password.length < 8) {
+    const phoneRegex = /^\d{10,15}$/; // Adjust for international formats if needed
+    if (!phoneRegex.test(phone)) {
+      this.toastService.showError('Please enter a valid phone number');
+      return;
+    }
+
+    if (password.length < 8) {
       this.toastService.showError('Password must be at least 8 characters long');
       return;
     }
 
-    // API call to backend
+    // Submit to backend
     this.http.post('http://localhost:3000/auth/signup', this.signupData).subscribe({
       next: (res) => {
         this.toastService.showSuccess('Account created successfully! Welcome to SendIT');

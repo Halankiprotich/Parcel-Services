@@ -6,24 +6,37 @@
           <h3>Welcome to SendIT</h3>
           <p>Your trusted partner for reliable deliveries</p>
         </div>
+
         <div class="form-header">
           <h2>Create Account</h2>
           <p>Join SendIT and start delivering with confidence</p>
         </div>
-        
+
         <form (ngSubmit)="onSubmit()" class="signup-form">
           <div class="form-group">
-            <label for="name">Full Name</label>
+            <label for="firstName">First Name</label>
             <input 
               type="text" 
-              id="name" 
-              name="name" 
-              [(ngModel)]="signupData.name" 
+              id="firstName" 
+              name="firstName" 
+              [(ngModel)]="signupData.firstName" 
               required 
-              placeholder="Enter your full name"
+              placeholder="Enter your first name"
             >
           </div>
-          
+
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input 
+              type="text" 
+              id="lastName" 
+              name="lastName" 
+              [(ngModel)]="signupData.lastName" 
+              required 
+              placeholder="Enter your last name"
+            >
+          </div>
+
           <div class="form-group">
             <label for="email">Email Address</label>
             <input 
@@ -35,7 +48,20 @@
               placeholder="Enter your email"
             >
           </div>
-          
+
+          <!-- 📱 Phone Number Field -->
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input 
+              type="tel" 
+              id="phone" 
+              name="phone" 
+              [(ngModel)]="signupData.phone" 
+              required 
+              placeholder="Enter your phone number"
+            >
+          </div>
+
           <div class="form-group">
             <label for="password">Password</label>
             <div class="password-input-container">
@@ -57,10 +83,10 @@
               </button>
             </div>
           </div>
-          
+
           <button type="submit" class="signup-btn">Create Account</button>
         </form>
-        
+
         <div class="login-link">
           <p>Already have an account? <a routerLink="/login">Sign in</a></p>
         </div>

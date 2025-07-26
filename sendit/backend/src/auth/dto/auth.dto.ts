@@ -2,7 +2,10 @@
 export class RegisterDto {
   email: string;
   password: string;
-  name: string;
+
+  firstName: string;
+  lastName: string;
+
   phone?: string;
   address?: string;
   role?: 'CUSTOMER' | 'DRIVER' | 'ADMIN';

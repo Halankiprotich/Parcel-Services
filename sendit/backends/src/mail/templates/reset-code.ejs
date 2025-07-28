@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Password Reset Code</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        padding: 20px;
+        color: #333;
+      }
+
+      .container {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 600px;
+        margin: auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h3>Hello <%= fullName %>,</h3>
+      <p>Your password reset code is: <strong><%= code %></strong></p>
+      <p>This code will expire in 10 minutes.</p>
+    </div>
+  </body>
+</html>
+
